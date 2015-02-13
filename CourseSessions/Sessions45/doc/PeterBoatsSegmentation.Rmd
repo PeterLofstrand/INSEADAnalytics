@@ -1,0 +1,487 @@
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<style type="text/css"> body {padding: 10px 30px 10px 30px;} table,th, td {text-align: center;} </style>
+
+Report 2 - Boats Segmentation: Cluster Analysis
+
+========================================================
+
+By: 
+
+Zaytseva, Elena
+
+Löfstrand, Peter
+
+Holsapple, John
+
+Dou, Xi
+
+
+Business Decisions
+---------------------------------------------------------
+
+Based on the factoring exercise and the clear directions of the semantic scale rating obtained from the first 29 questions, we have agreed to proceed with a cluster analysis to determine the segmentation better.
+
+The goal is to identify the different segements of respondents, their preferences and which segments are the best potential buyers. We plan to make straategic marketing and product development efforts based on the results.
+
+
+The Data
+--------------------------------------------
+
+
+The dataset collected from the survey includes 2813 respondents and the dta has been cleaned for inconsistency.
+
+
+```{r echo=FALSE, message=FALSE, prompt=FALSE, results='asis'}
+# let's make the data into data.matrix classes so that we can easier visualize them
+ProjectData = data.matrix(ProjectData)
+```
+
+<br>
+
+Here are the responses for the first `r min(max_data_report,nrow(ProjectData))` people:
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, message=FALSE, prompt=FALSE, results='asis'}
+show_data = data.frame(round(ProjectData,2))
+
+show_data = show_data[1:min(max_data_report,nrow(show_data)),]
+
+row<-rownames(show_data)
+dfnew<-cbind(row,show_data)
+change<-colnames(dfnew)
+change[1]<-"Variables"
+colnames (dfnew)<-change
+m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
+print(m1,'chart')
+```
+</div>
+</div>
+<br> <br>
+
+
+Our Approach
+---------------------------------------------------------------
+
+#The clustering and segmentation has been done in 7 steps according to the below process
+
+1. Confirm the data in metric 
+
+2. Decide whether to scale or standardize the data
+
+3. Decide which variables to use for clustering
+
+4. Define similarity or dissimilarity measures between observations
+
+5. Visualize Individual Attributes and  Pair-wise Distances between the Observations
+
+6. Select the clustering method to use and decide how many clusters to have
+
+7. Profile and interpret the clusters 
+
+
+
+
+
+#### Step 1. Confirm the data in metric 
+
+
+In our case the data are metric, so we continue to the next step. Before doing so, we see the descriptive statistics of our data to get, as always, a better understanding of the data. 
+Our data have the following descriptive statistics: 
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
+show_data = data.frame(round(my_summary(ProjectData),2))
+#show_data = show_data[1:min(max_data_report,nrow(show_data)),]
+row<-rownames(show_data)
+dfnew<-cbind(row,show_data)
+change<-colnames(dfnew)
+change[1]<-"Variables"
+colnames (dfnew)<-change
+m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
+print(m1,'chart')
+```
+</div>
+</div>
+
+
+
+#### 2. So should we scale or standardize the data?
+
+
+```{r, results='asis'}
+ProjectData_scaled=apply(ProjectData,2, function(r) {if (sd(r)!=0) res=(r-mean(r))/sd(r) else res=0*r; res})
+```
+
+Yay, look at the below cool summary statistics of the scaled dataset:
+
+<br>
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
+
+show_data = data.frame(round(my_summary(ProjectData_scaled),2))
+#show_data = show_data[1:min(max_data_report,nrow(show_data)),]
+row<-rownames(show_data)
+dfnew<-cbind(row,show_data)
+change<-colnames(dfnew)
+change[1]<-"Variables"
+colnames (dfnew)<-change
+m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
+print(m1,'chart')
+```
+</div>
+</div>
+
+<br>
+As expected all variables have mean 0 and standard deviation 1. Phew!
+
+While this is typically a necessary step, one has to always do it with care: some times you may want your analytics findings to be driven mainly by a few attributes that take large values; other times having attributes with different scales may imply something about those attributes. In many such cases one may choose to skip step 2 for some of the raw attributes.  
+
+We decide to use the unscaled data for now. 
+
+
+#### Step 3. Decide which variables to use for clustering
+
+Based on our factoring as shown in the session 2 & 3 report we have some clear indication of how to factor the data. We have the choosen the most prominent variables (highest value) within each of those factors. Namely questions: 21, 27, 9, 4, 2
+
+
+#### Step 4. Define similarity or dissimilarity measures between observations
+
+In our case we explore two distance metrics: the commonly used **Euclidean distance** as well as a simple one we define manually. 
+
+The Euclidean distance between two observations (in our case, customers) is simply the square root of the average of the square difference between the attributes of the two observations (in our case, customers). For example, the distance of the first customer in our data from customers 2-5 (summarized above), using their responses to the 6 attitudinal questions is:
+
+```{r include=FALSE, echo=FALSE, comment=NA, warning=FALSE, message=FALSE}
+euclidean_pairwise <- as.matrix(dist(head(ProjectData_segment, 5), method="euclidean"))
+euclidean_pairwise <- euclidean_pairwise*lower.tri(euclidean_pairwise) + euclidean_pairwise*diag(euclidean_pairwise) + 10e10*upper.tri(euclidean_pairwise)
+euclidean_pairwise[euclidean_pairwise==10e10] <- NA
+```
+
+<div class="row">
+<div class="col-md-4">
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
+print(xtable(euclidean_pairwise, caption="Pairwise Distances between the first 5 observations using The Euclidean Distance Metric", digits=1), type="html", html.table.attributes = "class='table table-striped table-hover table-bordered'", caption.placement="top", comment = FALSE, include.rownames = FALSE)
+```
+</div>
+</div>
+
+Notice for example that if we use, say, the Manhattan distance metric, these distances change as follows:
+
+```{r include=FALSE, echo=FALSE, comment=NA, warning=FALSE, message=FALSE}
+manhattan_pairwise <- as.matrix(dist(head(ProjectData_segment, 5), method="manhattan"))
+manhattan_pairwise <- manhattan_pairwise*lower.tri(manhattan_pairwise) + manhattan_pairwise*diag(manhattan_pairwise) + 10e10*upper.tri(manhattan_pairwise)
+manhattan_pairwise[manhattan_pairwise==10e10] <- NA
+```
+
+<div class="row">
+<div class="col-md-4">
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
+print(xtable(manhattan_pairwise, caption="Pairwise Distances between the first 5 observations using The Manhattan Distance Metric", digits=1), type="html", html.table.attributes = "class='table table-striped table-hover table-bordered'", caption.placement="top", comment = FALSE, include.rownames = FALSE)
+```
+</div>
+</div>
+
+Let's now define our own distance metric, as an example. Let's say that the management team of the company believes that two customers are similar if they do not differ in their ratings of the attitudinal questions by more than 2 points. We can manually assign a distance of 1 for every question for which two customers gave an answer that differs by more than 2 points, and 0 otherwise. It is easy to write this distance function in R:
+
+```{r ,results='asis'}
+My_Distance_function<-function(x,y){sum(abs(x-y)>2)}
+
+```
+
+Here is how the pairwise distances between the respondents now look like.
+
+```{r include=FALSE, echo=FALSE, comment=NA, warning=FALSE, fig.align='center', message=FALSE}
+Manual_Pairwise=apply(head(ProjectData_segment,5),1,function(i) apply(head(ProjectData_segment,5),1,function(j) My_Distance_function(i,j) ))
+Manual_Pairwise <- Manual_Pairwise * lower.tri(Manual_Pairwise) + Manual_Pairwise * diag(Manual_Pairwise) + 10e10*upper.tri(Manual_Pairwise)
+Manual_Pairwise[Manual_Pairwise == 10e10] <- NA
+```
+
+<div class="row">
+<div class="col-md-4">
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
+print(xtable(Manual_Pairwise, caption="Pairwise Distances between the first 5 observations using a simple manually defined Distance Metric", digits=1), type="html", html.table.attributes = "class='table table-striped table-hover table-bordered'", caption.placement="top", comment = FALSE, include.rownames = FALSE)
+```
+</div>
+</div>
+
+Since the manual pairwise distance doesn't make much sense we have chosen to stay with the euclidian distance. The Manhattan, although with larger numbers, still have similar ratios.
+
+#### Step 5. Visualize Individual Attributes and  Pair-wise Distances between the Observations
+
+
+Now let's look at nice graphs and pictures - my favorite is the histogram!
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, echo=FALSE, error=FALSE, fig.align='center', results='asis'}
+
+if (0){
+  
+  ProjectDataframe = data.frame(ProjectData_segment[,1:min(4,ncol(ProjectData_segment))])
+  V1 <- ggplot() + geom_bar(aes(y = ..count.., x = V1),data=ProjectDataframe) + ylab(label = 'Frequency') + xlab(label = 'Histogram of Variable 1') + theme_grey()
+  V2 <- ggplot() + geom_bar(aes (y = ..count.., x = V2),data=ProjectDataframe) + ylab(label = 'Frequency') + xlab(label = 'Histogram of Variable 2') + theme_grey()
+  V3 <- ggplot() + geom_bar(aes (y = ..count.., x = V3),data=ProjectDataframe) + ylab(label = 'Frequency') + xlab(label = 'Histogram of Variable 3') + theme_grey()
+  V4 <- ggplot() + geom_bar(aes (y = ..count.., x = V4),data=ProjectDataframe) + ylab(label = 'Frequency') + xlab(label = 'Histogram of Variable 4') + theme_grey()
+  grid.arrange(V1, V2, V3, V4)
+  
+  }
+
+```
+
+
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
+Pairwise_Distances <- dist(ProjectData_segment, method = distance_used) 
+hist(Pairwise_Distances, main = NULL, xlab="Histogram of all pairwise Distances between observtions", ylab="Frequency")
+```
+
+<blockquote> <p>
+Visualization is very important for data analytics, as it can provide a first understanding of the data.
+</p> </blockquote>
+
+<br> 
+
+#### Step 6. Select the clustering method to use and decide how many clusters to have
+
+After testing both the **Kmeans Clustering Method**, and the **Hierarchical Clustering Method**, we have seen a much clearer indication of coherent data through the **Hierarchical Clustering Method**. The **Dendrogram** using the **Hierarchical Clustering Method** also shows a better spread of the clusters and how they are forked out. We judge from the dendrogram that we have a fairly good spread among the clusters, leading us to believe there will also be a sufficient number of respondents present in each cluster to accurately represent the segment.
+
+Have a look below, awesome huh?!
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
+Hierarchical_Cluster_distances <- dist(ProjectData_segment, method=distance_used)
+Hierarchical_Cluster <- hclust(Hierarchical_Cluster_distances, method=hclust_method)
+# Display dendogram
+plot(Hierarchical_Cluster, main = NULL, sub=NULL, labels = 1:nrow(ProjectData_segment), xlab="Our Observations", cex.lab=1, cex.axis=1) 
+# Draw dendogram with red borders around the 3 clusters
+rect.hclust(Hierarchical_Cluster, k=numb_clusters_used, border="red") 
+```
+
+
+We can also plot the "distances" traveled before we need to merge any of the lower and smaller in size clusters into larger ones - the heights of the tree branches that link the clusters as we traverse the tree from its leaves to its root. If we have n observations, this plot has n-1 numbers. 
+
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
+max <- nrow(ProjectData)
+num <- max - 1
+df1 <- cbind(as.data.frame(Hierarchical_Cluster$height[length(Hierarchical_Cluster$height):1]), c(1:num))
+colnames(df1) <- c("distances","index")
+Line <- gvisLineChart(as.data.frame(df1), xvar="index", yvar="distances", options=list(title='Distances plot', legend="right", width=900, height=600, hAxis="{title:'Number of Components', titleTextStyle:{color:'black'}}", vAxes="[{title:'Distances'}]", series="[{color:'green',pointSize:3, targetAxisIndex: 0}]"))
+print(Line,'chart')
+```
+
+For now let's consider the `r numb_clusters_used`-segments solution found by the Hierarchical Clustering method (using the `r distance_used` distance and the hclust option `r hclust_method`). We can also see the segment each observation (respondent in this case) belongs to for the first `r min(max_data_report,nrow(ProjectData))` people:
+
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
+cluster_memberships_hclust <- as.vector(cutree(Hierarchical_Cluster, k=numb_clusters_used)) # cut tree into 3 clusters
+cluster_ids_hclust=unique(cluster_memberships_hclust)
+
+ProjectData_with_hclust_membership <- cbind(1:length(cluster_memberships_hclust),cluster_memberships_hclust)
+colnames(ProjectData_with_hclust_membership)<-c("Observation Number","Cluster_Membership")
+```
+
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, message=FALSE, prompt=FALSE, results='asis'}
+show_data = data.frame(round(ProjectData_with_hclust_membership,2))
+show_data = show_data[1:min(max_data_report,nrow(show_data)),]
+row<-rownames(show_data)
+dfnew<-cbind(row,show_data)
+change<-colnames(dfnew)
+change[1]<-"Variables"
+colnames (dfnew)<-change
+m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
+print(m1,'chart')
+```
+</div>
+</div>
+<br> <br>
+
+**Using Kmean Clustering**
+
+Here are the clusters our observations belong to when we select `r numb_clusters_used` clusters and the `r kmeans_method` kmeans method, for the first `r min(max_data_report,nrow(ProjectData))` people:
+
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
+kmeans_clusters <- kmeans(ProjectData_segment,centers= numb_clusters_used, iter.max=1000, algorithm=kmeans_method)
+
+ProjectData_with_kmeans_membership <- cbind(1:length(kmeans_clusters$cluster),kmeans_clusters$cluster)
+colnames(ProjectData_with_kmeans_membership)<-c("Observation Number","Cluster_Membership")
+```
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, message=FALSE, prompt=FALSE, results='asis'}
+show_data = data.frame(round(ProjectData_with_kmeans_membership,2))
+show_data = show_data[1:min(max_data_report,nrow(show_data)),]
+row<-rownames(show_data)
+dfnew<-cbind(row,show_data)
+change<-colnames(dfnew)
+change[1]<-"Variables"
+colnames (dfnew)<-change
+m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
+print(m1,'chart')
+```
+</div>
+</div>
+<br> <br>
+
+A simple observation from both these clustering methods is that cluster 5 seems slightly underrepresented. Let's go and count the actual cluster sizes as well to make sure we don't have an issue there!
+
+From the generated CSV-file of the clustering, and with some excel-magic, we have found the following split of respondents into each cluster:
+
+Cluster 1:
+**605**
+
+Cluster 2:
+**500**
+
+Cluster 3:
+**519**
+
+Cluster 4:
+**477**
+
+Cluster 5:
+**712**
+
+
+As we can see we have a good spread of the respondents across the survey, and in particular we can discard our concern that cluster 5 was underrepresented. We are ready to go find out what these people are really all about!
+
+
+#### Step 7. Profile and interpret the clusters 
+
+
+So here we go, with out 5 clusters we can check the numbers for each of the segments per question. Here we can of course do a few "quick-and-dirty" measurements in excel as well such as "max()" for purchase intent or "min()" for price sensitivy. That would give us some idea about where to target our efforts, but since we've asked so many questions we better look a bit closer. Anyways, first the numbers hey!
+
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
+cluster_memberships_kmeans <- kmeans_clusters$cluster 
+cluster_ids_kmeans <- unique(cluster_memberships_kmeans)
+```
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
+cluster_memberships <- cluster_memberships_hclust
+cluster_ids <-  cluster_ids_hclust  
+if (profile_with == "hclust"){
+  cluster_memberships <- cluster_memberships_hclust
+  cluster_ids <-  cluster_ids_hclust  
+  }
+if (profile_with == "kmeans"){
+  cluster_memberships <- cluster_memberships_kmeans
+  cluster_ids <-  cluster_ids_kmeans
+  }
+
+# SAVE THE DATA in the cluster file
+NewData = matrix(cluster_memberships,ncol=1)
+write.csv(NewData,file=cluster_file)
+
+population_average = matrix(apply(ProjectData_profile, 2, mean), ncol=1)
+colnames(population_average) <- "Population"
+Cluster_Profile_mean <- sapply(sort(cluster_ids), function(i) apply(ProjectData_profile[(cluster_memberships==i), ], 2, mean))
+if (ncol(ProjectData_profile) <2)
+  Cluster_Profile_mean=t(Cluster_Profile_mean)
+colnames(Cluster_Profile_mean) <- paste("Segment", 1:length(cluster_ids), sep=" ")
+cluster.profile <- cbind (population_average,Cluster_Profile_mean)
+```
+
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, results='asis'}
+show_data = data.frame(round(cluster.profile,2))
+#show_data = show_data[1:min(max_data_report,nrow(show_data)),]
+row<-rownames(show_data)
+dfnew<-cbind(row,show_data)
+change<-colnames(dfnew)
+change[1]<-"Variables"
+colnames (dfnew)<-change
+m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
+print(m1,'chart')
+
+```
+</div>
+</div>
+
+We can also "visualize" the segments using **snake plots** for each cluster. For example, we can plot the means of the profiling variables for each of our clusters to better visualize differences between segments. For better visualization we plot the standardized profiling variables. It's snakey to say the least! Like my last EKG check somewhat!
+
+```{r Fig2, fig.width=6, fig.height=6, message=FALSE, echo=FALSE, fig.align='center', warning=FALSE, fig=TRUE}
+ProjectData_scaled_profile = ProjectData_scaled[, profile_attributes_used,drop=F]
+
+Cluster_Profile_standar_mean <- sapply(sort(cluster_ids), function(i) apply(ProjectData_scaled_profile[(cluster_memberships==i), ,drop = F], 2, mean))
+if (ncol(ProjectData_scaled_profile) < 2)
+  Cluster_Profile_standar_mean = t(Cluster_Profile_standar_mean)
+colnames(Cluster_Profile_standar_mean) <- paste("Segment", 1:length(cluster_ids), sep=" ")
+
+plot(Cluster_Profile_standar_mean[, 1,drop=F], type="l", col="red", main="Snake plot for each cluster", ylab="mean of cluster", xlab="profiling variables (standardized)",ylim=c(min(Cluster_Profile_standar_mean),max(Cluster_Profile_standar_mean))) 
+for(i in 2:ncol(Cluster_Profile_standar_mean))
+  lines(Cluster_Profile_standar_mean[, i], col="blue")
+```
+
+Can we see differences between the segments? Do the segments differ in terms of their average household income and in terms of how often they visit the mall? What else can we say about these segments?
+
+Of course! Let's try to see what deviations from the mean we have, and if there is any links between certain clusters and their general averages
+
+This is so nicely presented when we chose to compare each response average, per cluster, to the population average, and then paint a bit green on the ones that are above the mean and red on the ones below. For our five clusters it will look quite a lot like the below in fact!
+
+```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, results='asis'}
+population_average_matrix <- population_average[,"Population",drop=F] %*% matrix(rep(1,ncol(Cluster_Profile_mean)),nrow=1)
+cluster_profile_ratios <- (ifelse(population_average_matrix==0, 0,Cluster_Profile_mean/population_average_matrix))
+colnames(cluster_profile_ratios) <- paste("Segment", 1:ncol(cluster_profile_ratios), sep=" ")
+rownames(cluster_profile_ratios) <- colnames(ProjectData)[profile_attributes_used]
+
+## printing the result in a clean-slate table
+cat(renderHeatmapX(cluster_profile_ratios, border=1, center = 1, minvalue = heatmin))
+```
+
+
+So what can we infer about these clusters - do we have customer segments in the making? Let's attack them one by one!
+
+**Cluster 1:** These are the guys who don't really mind paying a bit extra, they do see their bout and brand as a bit of a status symbol and they like some quality. It's not a very demanding segment, they are in fact quite average about the rest. A bit bland so to say. What is worth noting towards the end of the line of questioning though is that they are not really likely to recommend this brand, although they do have an higher than average purchase intent. Can we do anything to improve their ownership satisfaction and secure that re-purchase? Let's call this segment the "bored" customers.
+
+**Cluster 2:** Boom! Who cares about money? Give me all the bells and whistles! These are the happy shoppers with deep pockets and they need the latest, greatest and most glittery. If there was a "pimp my boat" show, these guys would be in there. They like everything about their boat, the boating life and they spend a considerable amount of time on their boats. Better yet, they also like everything about our brand as well, from service to performance. This gotta be a home run!? They are even extremely keen to recommend us to their buddys - we need to keep thes brand ambassadors at all cost! Bu wait, what now, they ahve very low purchase intent of our brand - not good. What's going on here? Well, after switching from Mercedes to Jaguar to Porche, how likely are you to just stay with the old stuff over and over - maybe these guys are wild explorers looking to try the next greatest and coolest? We label this segment the "explorers".
+
+**Cluster 3:** So here we have a very interesting cluster. Theya re also extremely keen on buying a boat with a lot of extras. Status symbol all the way and they have devoted their life to boating. But at the same time they only want the cheapest possible thing. IN fact they barely wanna purchase the boat at all. What's up with these guys? Maybe the answer lies in the fild representing age and income? This cluster has a majority of younger people with lower than average income. Are we looking at daydreaming youngsters or low income taker who one day would like to own a very affordable boat? We shall label these guys the "youngsters".
+
+**Cluster 4:** Another very price sensitive cluster. But these guys are not very interested in boating it seems. They don't care about status or frills, they just want something that floats. And unfortunately they seem a bit disappointed with what we are offering them as well from our brand, not good. These are in fact toxic bran ambassadors that might even complain about our product. Here we surely have room for improvement. We shall call these guys the "pessimists".
+
+**Cluster 5:** Cluster 5 being not so proce sensitive, the boat is not at all about the brand or status. They don't want any extras and they seem to spend on average a bit less time on their boating interest. We also note this cluster has a significantly higher age and average income than the other clusters as well. While not necessarliy recommending our brand they do still seem to want to buy it again. This cluster could be a sleeping fortune or a dying breed. We shall call them the "retired" customers. We think they use a simple functional boat, not to show off, but as a pass time in the summer and they don't want to change too much in their lifestyle.
+
+
+Intepretation, Decisions and Conclusion
+----------------------------------------------------------------
+
+Now what to do with this deep and profound insight into the customers around us. Clearly the objectives of the firm is somewhat in the line of "maximizing profits, increasing revenue and market share and being the best and most liked brand in the world". Modest aspirations found at most companies these days.
+
+Without being senior marketing specialists, we will at least try to formulate some general strategies and recommendations for each customer segment!
+
+**BORED CUSTOMERS**
+They don't seem to ahve an issue with the product itself so brand reputation is what theya re looking for. These customers might look for other things besides the boat. Maybe a club membership or invites to events. As they have a high re-purchase intent and are not price sensitive, we should probably address these guys proactively through customer relations channels. Further research into this segment would need to focus on their inwillingness to recommend us where everything else seems to be ok.
+
+**THE EXPLORERS**
+Here we have a great segment that likes all about us but seem to not want to do it over again. We think this is product related. They are constantly looking for something new and better. If we want to keep this segment, we need to look into our product line. Can we attract them with a new "over the top" model? Can we add a lot of add-on sales through fancy functionality? Further research would include what competitors they might be looking at now, and what they find as new, innovative and status boosting.
+
+**THE YONGSTERS**
+Simple indeed, no money no boating. These guys are unlikely to put money in our pocket unless we give them something very cheap. Again, do we have a product geared to this segment? And do we want to sell to this segment? One important aspect ehre is to understand if these people have buying incluence over others. Maybe it's the kids of parents that have a big boat. If no more conclusive data on this segment can be attained, we recommend putting them on paus for now.
+
+**THE PESSIMISTS**
+These customers need a lot more value for money. Two actions required for this segment. First, we need to see what product is corresponding to their needs - how good is out low-cost alternative? Can we make it even lighter and cheaper? Then we need to understand what in our current product is not satisfactory, as they are very negative towards our brand from many aspects. Not recommending us and lower than average willingness to buy over again makes this a very hard segment to work with. If we don't want to operate in the low cost product segment, we might need ot drop this segment.
+
+**RETIRED CUSTOMERS**
+A steady. and large, segment we have customers looking for basic functionality and no show-off. A moderate product with high quality should keep this segment happy and we beleive the key to keeping them is to improve the customer service and a focus on aspects such as safety and peace of ownership. Loyalty might be a big factor in this segment we would like to explore as well.
+
+
+**SUMMARY**
+
+With 3 segments offering good opportunities for this boat manufacturer and two that at least require further investigation before we spend money, we think the two key aspects to focus on is
+
+  - Customer service, add-on services, perks and benefits
+  - Product series, category and additional functionality and performance
+  
+As for marketing, we intend to spend mainly on the three key segments identified, but also realize there might be some customer confusion taking place if we want to be the newest and trendiest and at the same time the safest and calmest. Perhaps the portfolio can be split into one "new and hot" category and one "quality and value for money" category.
+
+The key information we would like to enhance this analysis result is specificaitons of the boat they currently own.
+
+**--- end ---**
