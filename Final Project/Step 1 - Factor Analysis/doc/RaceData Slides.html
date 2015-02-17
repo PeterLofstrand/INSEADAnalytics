@@ -1,0 +1,3545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Analytics for Business</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Data Analytics for Business">
+  <meta name="author" content="T. Evgeniou">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Data Analytics for Business</h1>
+    <h2>Session 2-3, Dimensionality Reduction and Derived Attributes (Technical Slides)</h2>
+    <p>T. Evgeniou<br/>INSEAD</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Why this class? Three goals</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>Organizational Level: Develop your intuition about identifying data analytics opportunities and their implementation challenges  </p></li>
+<li><p>Project Level: Learn how to approach data analytics projects  </p></li>
+<li><p>Analysis Level: Learn how to perform, read, and use key data analytics methods.</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Data Analytics Processes: Iterative Process Cycle with a Lifetime</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Step 1: Defining the Objective(s)  </p>
+
+<p>Step 2: Data Preparation and Exploration</p>
+
+<p>Step 3: Analysis</p>
+
+<p>Step 4: Performance Assessment</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>What is Dimensionality Deduction and Factor Analysis?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Derive new  variables which are (linear) combinations of the original ones and capture most of the information in the original data. </p>
+
+<p>Is often used as a first step in Data Analytics</p>
+
+<p>Can also be used to solve multicollinearity issues in regression</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Factor Analysis: Key idea</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>Transform the original selected variables into a smaller set of factors</p></li>
+<li><p>Understand the underlying structure of the data and the new factors</p></li>
+<li><p>Use the factors for subsequent analysis</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Key Questions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>Can we really simplify the data by grouping the raw attributes?</p></li>
+<li><p>How many factors should we use?</p></li>
+<li><p>How good are the factors we found?</p></li>
+<li><p>How interpretable and actionable are the factors we found? </p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Dimensionality Reduction and Factor Analysis: 6 (Easy) Steps</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>Confirm the data is metric </p></li>
+<li><p>Decide whether to scale or standardize the data</p></li>
+<li><p>Check the correlation matrix to see if Factor Analysis makes sense</p></li>
+<li><p>Develop a scree plot and decide on the number of factors to be derived</p></li>
+<li><p>Interpret the factors (consider factor rotations - technical but useful)</p></li>
+<li><p>Save factor scores for subsequent analyses</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Applying Factor Analysis: Evaluating MBA Applications</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Variables available:</p>
+
+<ul>
+<li>GPA</li>
+<li>GMAT score</li>
+<li>Scholarships, fellowships won</li>
+<li>Evidence of Communications skills </li>
+<li>Prior Job Experience</li>
+<li>Organizational Experience</li>
+<li>Other extra curricular achievements</li>
+</ul>
+
+<p>Which variables are correlated? What do these variables capture?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Example Factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39112c7e3cb4 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "victories",
+0.91,
+0.24,
+0.24 
+],
+[
+ "poles",
+0.91,
+0.21,
+0.18 
+],
+[
+ "Fastest lap",
+0.87,
+0.35,
+0.1 
+],
+[
+ "Champion",
+0.83,
+0.1,
+0.28 
+],
+[
+ "podium",
+0.81,
+0.49,
+0.18 
+],
+[
+ "point",
+0.65,
+0.49,
+0.26 
+],
+[
+ "CP     ",
+0.39,
+0.1,
+0.91 
+],
+[
+ "classified",
+0.33,
+0.9,
+0.12 
+],
+[
+ "entries",
+0.21,
+0.95,
+0.05 
+],
+[
+ "qualification",
+0.21,
+0.96,
+0.05 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39112c7e3cb4() {
+var data = gvisDataTableID39112c7e3cb4();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39112c7e3cb4')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39112c7e3cb4);
+})();
+function displayChartTableID39112c7e3cb4() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39112c7e3cb4"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39112c7e3cb4" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Step 1: Confirm the data are metric</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID3911ea2c95 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+1506,
+7,
+91,
+68,
+77,
+155,
+309,
+308,
+241,
+444 
+],
+[
+ "2",
+660,
+0,
+11,
+14,
+17,
+68,
+326,
+325,
+227,
+-68 
+],
+[
+ "3",
+1203,
+1,
+15,
+8,
+8,
+50,
+268,
+267,
+215,
+91 
+],
+[
+ "4",
+1767,
+2,
+32,
+23,
+21,
+97,
+236,
+236,
+200,
+460 
+],
+[
+ "5",
+950,
+0,
+11,
+16,
+16,
+39,
+212,
+212,
+179,
+-247 
+],
+[
+ "6",
+535,
+0,
+13,
+12,
+18,
+62,
+247,
+247,
+169,
+-198 
+],
+[
+ "7",
+246,
+0,
+1,
+4,
+1,
+11,
+256,
+256,
+167,
+12 
+],
+[
+ "8",
+1024,
+1,
+20,
+17,
+39,
+77,
+213,
+212,
+167,
+124 
+],
+[
+ "9",
+275,
+0,
+3,
+4,
+2,
+18,
+231,
+230,
+163,
+35 
+],
+[
+ "10",
+1049,
+0,
+9,
+12,
+16,
+42,
+217,
+216,
+160,
+63 
+],
+[
+ "11",
+768,
+0,
+51,
+32,
+40,
+106,
+202,
+201,
+143,
+223 
+],
+[
+ "12",
+888,
+0,
+8,
+15,
+9,
+26,
+166,
+166,
+140,
+147 
+],
+[
+ "13",
+263,
+0,
+0,
+1,
+2,
+13,
+185,
+184,
+138,
+64 
+],
+[
+ "14",
+1487,
+2,
+33,
+38,
+19,
+70,
+148,
+148,
+128,
+99 
+],
+[
+ "15",
+281,
+0,
+6,
+8,
+13,
+37,
+257,
+256,
+126,
+-3 
+],
+[
+ "16",
+481,
+0,
+23,
+24,
+22,
+60,
+208,
+203,
+124,
+275 
+],
+[
+ "17",
+384,
+0,
+10,
+12,
+21,
+48,
+210,
+209,
+124,
+-1 
+],
+[
+ "18",
+329,
+0,
+6,
+6,
+8,
+27,
+181,
+180,
+121,
+0 
+],
+[
+ "19",
+241,
+0,
+1,
+2,
+4,
+32,
+202,
+201,
+119,
+142 
+],
+[
+ "20",
+1618,
+4,
+39,
+45,
+23,
+66,
+139,
+139,
+118,
+133 
+],
+[
+ "21",
+610,
+3,
+41,
+65,
+20,
+80,
+162,
+160,
+108,
+263 
+],
+[
+ "22",
+234,
+1,
+11,
+13,
+9,
+23,
+165,
+165,
+108,
+19 
+],
+[
+ "23",
+270,
+0,
+14,
+13,
+10,
+36,
+179,
+171,
+102,
+98 
+],
+[
+ "24",
+186,
+0,
+5,
+2,
+5,
+23,
+215,
+191,
+102,
+-3 
+],
+[
+ "25",
+424,
+2,
+20,
+26,
+25,
+51,
+165,
+160,
+102,
+154 
+],
+[
+ "26",
+480,
+1,
+31,
+32,
+30,
+59,
+191,
+186,
+98,
+-11 
+],
+[
+ "27",
+76,
+0,
+1,
+0,
+0,
+5,
+158,
+158,
+98,
+91 
+],
+[
+ "28",
+298,
+0,
+12,
+6,
+6,
+45,
+146,
+146,
+97,
+32 
+],
+[
+ "29",
+132,
+0,
+3,
+1,
+1,
+15,
+164,
+161,
+97,
+62 
+],
+[
+ "30",
+281,
+0,
+14,
+6,
+6,
+35,
+149,
+141,
+96,
+110 
+],
+[
+ "31",
+173,
+0,
+3,
+2,
+6,
+18,
+161,
+157,
+96,
+143 
+],
+[
+ "32",
+228,
+0,
+6,
+7,
+6,
+32,
+180,
+176,
+94,
+-5 
+],
+[
+ "33",
+420,
+3,
+25,
+24,
+24,
+54,
+177,
+170,
+90,
+9 
+],
+[
+ "34",
+97,
+0,
+3,
+0,
+0,
+7,
+165,
+162,
+90,
+-83 
+],
+[
+ "35",
+169,
+0,
+5,
+2,
+5,
+20,
+154,
+151,
+89,
+43 
+],
+[
+ "36",
+105,
+0,
+1,
+1,
+2,
+4,
+112,
+112,
+88,
+23 
+],
+[
+ "37",
+123,
+0,
+0,
+0,
+1,
+0,
+128,
+128,
+88,
+32 
+],
+[
+ "38",
+191,
+0,
+4,
+0,
+1,
+26,
+148,
+147,
+86,
+-104 
+],
+[
+ "39",
+209,
+0,
+5,
+5,
+14,
+28,
+139,
+130,
+83,
+-74 
+],
+[
+ "40",
+98,
+0,
+0,
+0,
+0,
+9,
+165,
+158,
+83,
+2 
+],
+[
+ "41",
+181,
+0,
+7,
+18,
+12,
+22,
+165,
+149,
+82,
+8 
+],
+[
+ "42",
+248,
+0,
+8,
+1,
+8,
+33,
+112,
+110,
+78,
+26 
+],
+[
+ "43",
+246,
+0,
+10,
+3,
+5,
+33,
+113,
+106,
+77,
+-11 
+],
+[
+ "44",
+360,
+0,
+22,
+20,
+19,
+42,
+122,
+116,
+77,
+38 
+],
+[
+ "45",
+253,
+0,
+14,
+11,
+11,
+31,
+128,
+122,
+73,
+15 
+],
+[
+ "46",
+206,
+0,
+10,
+14,
+9,
+26,
+123,
+119,
+71,
+88 
+],
+[
+ "47",
+56,
+0,
+0,
+0,
+1,
+3,
+94,
+94,
+70,
+29 
+],
+[
+ "48",
+59,
+0,
+0,
+1,
+1,
+5,
+214,
+208,
+69,
+42 
+],
+[
+ "49",
+199,
+1,
+12,
+6,
+13,
+24,
+117,
+116,
+68,
+67 
+],
+[
+ "50",
+71,
+0,
+0,
+0,
+2,
+4,
+162,
+148,
+67,
+81 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','point');
+data.addColumn('number','Champion');
+data.addColumn('number','victories');
+data.addColumn('number','poles');
+data.addColumn('number','Fastest.lap');
+data.addColumn('number','podium');
+data.addColumn('number','entries');
+data.addColumn('number','qualification');
+data.addColumn('number','classified');
+data.addColumn('number','CP.....');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID3911ea2c95() {
+var data = gvisDataTableID3911ea2c95();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID3911ea2c95')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID3911ea2c95);
+})();
+function displayChartTableID3911ea2c95() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID3911ea2c95"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID3911ea2c95" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Step 2: Decide whether to scale or standardize the data: Summary Statistics</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39117f3a87c5 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "point",
+17,
+101.75,
+202.5,
+330.48,
+336.5,
+1767,
+383.72 
+],
+[
+ "Champion",
+0,
+0,
+0,
+0.39,
+0,
+7,
+1.07 
+],
+[
+ "victories",
+0,
+1,
+5,
+9.44,
+12,
+91,
+14.23 
+],
+[
+ "poles",
+0,
+0,
+4,
+9.16,
+13,
+68,
+13.42 
+],
+[
+ "Fastest lap",
+0,
+1,
+5,
+9.07,
+13.25,
+77,
+11.89 
+],
+[
+ "podium",
+0,
+6.75,
+22.5,
+27.46,
+37.5,
+155,
+27.99 
+],
+[
+ "entries",
+58,
+109,
+143,
+150.28,
+180.25,
+326,
+56.74 
+],
+[
+ "qualification",
+58,
+104,
+137.5,
+146.41,
+177,
+325,
+57.13 
+],
+[
+ "classified",
+50,
+61.75,
+82.5,
+94.06,
+110.5,
+241,
+44.48 
+],
+[
+ "CP     ",
+-247,
+-5,
+33.5,
+45.21,
+82.75,
+460,
+104.56 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','min');
+data.addColumn('number','X25.percent');
+data.addColumn('number','median');
+data.addColumn('number','mean');
+data.addColumn('number','X75.percent');
+data.addColumn('number','max');
+data.addColumn('number','std');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39117f3a87c5() {
+var data = gvisDataTableID39117f3a87c5();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39117f3a87c5')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39117f3a87c5);
+})();
+function displayChartTableID39117f3a87c5() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39117f3a87c5"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39117f3a87c5" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Data Standardization: Example Code</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ProjectDatafactor_scaled=apply(ProjectDataFactor,2, function(r) {
+  if (sd(r)!=0) { 
+    res=(r-mean(r))/sd(r) 
+    } else { 
+      res=0*r; res
+      }
+  })
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Standardized Data: Summary Statistics</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:26 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID391179cae94d () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "point",
+-0.82,
+-0.6,
+-0.33,
+0,
+0.02,
+3.74,
+1 
+],
+[
+ "Champion",
+-0.36,
+-0.36,
+-0.36,
+0,
+-0.36,
+6.16,
+1 
+],
+[
+ "victories",
+-0.66,
+-0.59,
+-0.31,
+0,
+0.18,
+5.73,
+1 
+],
+[
+ "poles",
+-0.68,
+-0.68,
+-0.38,
+0,
+0.29,
+4.39,
+1 
+],
+[
+ "Fastest lap",
+-0.76,
+-0.68,
+-0.34,
+0,
+0.35,
+5.71,
+1 
+],
+[
+ "podium",
+-0.98,
+-0.74,
+-0.18,
+0,
+0.36,
+4.56,
+1 
+],
+[
+ "entries",
+-1.63,
+-0.73,
+-0.13,
+0,
+0.53,
+3.1,
+1 
+],
+[
+ "qualification",
+-1.55,
+-0.74,
+-0.16,
+0,
+0.54,
+3.13,
+1 
+],
+[
+ "classified",
+-0.99,
+-0.73,
+-0.26,
+0,
+0.37,
+3.3,
+1 
+],
+[
+ "CP     ",
+-2.79,
+-0.48,
+-0.11,
+0,
+0.36,
+3.97,
+1 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','min');
+data.addColumn('number','X25.percent');
+data.addColumn('number','median');
+data.addColumn('number','mean');
+data.addColumn('number','X75.percent');
+data.addColumn('number','max');
+data.addColumn('number','std');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID391179cae94d() {
+var data = gvisDataTableID391179cae94d();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID391179cae94d')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID391179cae94d);
+})();
+function displayChartTableID391179cae94d() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID391179cae94d"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID391179cae94d" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Step 3:  Check correlation matrix to see if Factor Analysis makes sense</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<table border="1" class="data table table-bordered table-condensed">
+  <thead class="thead">
+    <tr>
+      <th></th>
+      <th>point</th>
+      <th>Champion</th>
+      <th>victories</th>
+      <th>poles</th>
+      <th>Fastest lap</th>
+      <th>podium</th>
+      <th>entries</th>
+      <th>qualification</th>
+      <th>classified</th>
+      <th>CP     </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="right">point</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(92,255,92)">0.64</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(74,255,74)">0.71</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(115,255,115)">0.55</td>
+      <td align="right" style="background-color: rgb(64,255,64)">0.75</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+    </tr>
+    <tr>
+      <td align="right">Champion</td>
+      <td align="right" style="background-color: rgb(92,255,92)">0.64</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.32</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(112,255,112)">0.56</td>
+    </tr>
+    <tr>
+      <td align="right">victories</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(99,255,99)">0.61</td>
+    </tr>
+    <tr>
+      <td align="right">poles</td>
+      <td align="right" style="background-color: rgb(74,255,74)">0.71</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(40,255,40)">0.84</td>
+      <td align="right" style="background-color: rgb(38,255,38)">0.85</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.42</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+    </tr>
+    <tr>
+      <td align="right">Fastest lap</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(40,255,40)">0.84</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(102,255,102)">0.60</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+    </tr>
+    <tr>
+      <td align="right">podium</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(38,255,38)">0.85</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(71,255,71)">0.72</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+    </tr>
+    <tr>
+      <td align="right">entries</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(28,255,28)">0.89</td>
+      <td align="right" style="background-color: rgb(199,255,199)">0.22</td>
+    </tr>
+    <tr>
+      <td align="right">qualification</td>
+      <td align="right" style="background-color: rgb(115,255,115)">0.55</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.32</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.42</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(197,255,197)">0.23</td>
+    </tr>
+    <tr>
+      <td align="right">classified</td>
+      <td align="right" style="background-color: rgb(64,255,64)">0.75</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(102,255,102)">0.60</td>
+      <td align="right" style="background-color: rgb(71,255,71)">0.72</td>
+      <td align="right" style="background-color: rgb(28,255,28)">0.89</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+    </tr>
+    <tr>
+      <td align="right">CP     </td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(112,255,112)">0.56</td>
+      <td align="right" style="background-color: rgb(99,255,99)">0.61</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(199,255,199)">0.22</td>
+      <td align="right" style="background-color: rgb(197,255,197)">0.23</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p></div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Step 4. Develop a scree plot and decide on the number of factors to be derived</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>For the method considered here (Principal Component Analysis):</p>
+
+<ul>
+<li>If there are n variables we will have n factors in total</li>
+<li>First factor will explain most of the variance, second next and so on.</li>
+</ul>
+
+<p>Eigenvalues and Variance Explained by Factors</p>
+
+<ul>
+<li>each factor will have an associated eigenvalue -  which corresponds to the amount of variance explained by that factor</li>
+<li>with standardized variables each variable has a variance of 1, and the sum of all eigenvalues with n raw attributes is n</li>
+<li>we would like to capture as much of the total variance as possible, while keeping as few factors as possible</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>How Many Factors? Eigenvalues and Variance Explained</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br></p>
+
+<style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:27 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID391142709e54 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "Component No:1",
+6.698557868,
+66.98557868,
+66.98557868 
+],
+[
+ "Component No:2",
+1.738291124,
+17.38291124,
+84.36848992 
+],
+[
+ "Component No:3",
+0.5895894826,
+5.895894826,
+90.26438474 
+],
+[
+ "Component No:4",
+0.3814510227,
+3.814510227,
+94.07889497 
+],
+[
+ "Component No:5",
+0.3034792235,
+3.034792235,
+97.1136872 
+],
+[
+ "Component No:6",
+0.1382182999,
+1.382182999,
+98.4958702 
+],
+[
+ "Component No:7",
+0.06104601218,
+0.6104601218,
+99.10633033 
+],
+[
+ "Component No:8",
+0.05549389815,
+0.5549389815,
+99.66126931 
+],
+[
+ "Component No:9",
+0.03161911141,
+0.3161911141,
+99.97746042 
+],
+[
+ "Component No:10",
+0.002253957921,
+0.02253957921,
+100 
+] 
+];
+data.addColumn('string','Components');
+data.addColumn('number','Eigenvalue');
+data.addColumn('number','Percentage_of_explained_variance');
+data.addColumn('number','Cumulative_percentage_of_explained_variance');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID391142709e54() {
+var data = gvisDataTableID391142709e54();
+var options = {};
+options["allowHtml"] = true;
+options["width"] =   1200;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+  var dataFormat1 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat1.format(data, 1);
+  var dataFormat2 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat2.format(data, 2);
+  var dataFormat3 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat3.format(data, 3);
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID391142709e54')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID391142709e54);
+})();
+function displayChartTableID391142709e54() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID391142709e54"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID391142709e54" 
+  style="width: 1200; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>How Many Factors? Scree Plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- LineChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:27 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataLineChartID391132d95bbf () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+6.698557868,
+1 
+],
+[
+ "2",
+1.738291124,
+1 
+],
+[
+ "3",
+0.5895894826,
+1 
+],
+[
+ "4",
+0.3814510227,
+1 
+],
+[
+ "5",
+0.3034792235,
+1 
+],
+[
+ "6",
+0.1382182999,
+1 
+],
+[
+ "7",
+0.06104601218,
+1 
+],
+[
+ "8",
+0.05549389815,
+1 
+],
+[
+ "9",
+0.03161911141,
+1 
+],
+[
+ "10",
+0.002253957921,
+1 
+] 
+];
+data.addColumn('string','components');
+data.addColumn('number','eigenvalues');
+data.addColumn('number','abline');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartLineChartID391132d95bbf() {
+var data = gvisDataLineChartID391132d95bbf();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Scree plot";
+options["legend"] = "right";
+options["width"] =    900;
+options["height"] =    500;
+options["hAxis"] = {title:'Number of Components', titleTextStyle:{color:'black'}};
+options["vAxes"] = [{title:'Eigenvalues'}];
+options["series"] = [{color:'green',pointSize:3, targetAxisIndex: 0}];
+
+    var chart = new google.visualization.LineChart(
+    document.getElementById('LineChartID391132d95bbf')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartLineChartID391132d95bbf);
+})();
+function displayChartLineChartID391132d95bbf() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID391132d95bbf"></script>
+ 
+
+<!-- divChart -->
+
+<div id="LineChartID391132d95bbf" 
+  style="width: 900; height: 500;">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>How many factors?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Three criteria to use:</p>
+
+<ul>
+<li>Eigenvalue &gt; 1</li>
+<li>Cumulative variance explained</li>
+<li>&quot;Elbow&quot; in the Scree plot</li>
+</ul>
+
+<p>Using the manual criterion we select 3 factors. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Step 5. Interpret the factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Rotated Selected Factors using the varimax rotation.</p>
+
+<style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:27 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39117fd81521 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "victories",
+0.91,
+0.24,
+0.24 
+],
+[
+ "poles",
+0.91,
+0.21,
+0.18 
+],
+[
+ "Fastest lap",
+0.87,
+0.35,
+0.1 
+],
+[
+ "Champion",
+0.83,
+0.1,
+0.28 
+],
+[
+ "podium",
+0.81,
+0.49,
+0.18 
+],
+[
+ "point",
+0.65,
+0.49,
+0.26 
+],
+[
+ "CP     ",
+0.39,
+0.1,
+0.91 
+],
+[
+ "classified",
+0.33,
+0.9,
+0.12 
+],
+[
+ "entries",
+0.21,
+0.95,
+0.05 
+],
+[
+ "qualification",
+0.21,
+0.96,
+0.05 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39117fd81521() {
+var data = gvisDataTableID39117fd81521();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39117fd81521')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39117fd81521);
+})();
+function displayChartTableID39117fd81521() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39117fd81521"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39117fd81521" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>For visualization, let&#39;s supress the small numbers...</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br></p>
+
+<style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:27 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID3911199c58d7 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "victories",
+0.91,
+null,
+null 
+],
+[
+ "poles",
+0.91,
+null,
+null 
+],
+[
+ "Fastest lap",
+0.87,
+null,
+null 
+],
+[
+ "Champion",
+0.83,
+null,
+null 
+],
+[
+ "podium",
+0.81,
+null,
+null 
+],
+[
+ "point",
+0.65,
+null,
+null 
+],
+[
+ "CP     ",
+null,
+null,
+0.91 
+],
+[
+ "classified",
+null,
+0.9,
+null 
+],
+[
+ "entries",
+null,
+0.95,
+null 
+],
+[
+ "qualification",
+null,
+0.96,
+null 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID3911199c58d7() {
+var data = gvisDataTableID3911199c58d7();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID3911199c58d7')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID3911199c58d7);
+})();
+function displayChartTableID3911199c58d7() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID3911199c58d7"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID3911199c58d7" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>What Factor Loads &quot;Look Good&quot;? Three Technical Quality Criteria</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>For each factor (column) only a few loadings are large (in absolute value)</p></li>
+<li><p>For each raw attribute (row) only a few loadings are large (in absolute value)</p></li>
+<li><p>Any pair of factors (columns) should have different &quot;patterns&quot; of loading</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Step 6. Save factor scores for subsequent analyses</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br></p>
+
+<style>
+.wrapper{
+height: 120%;
+width: 900px;
+overflow: auto;
+}
+</style>
+
+<div class="wrapper" style="font-size:20px;">
+<div class="row">
+<div class="col-md-3">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:27 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39113f68c0b1 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+5.06,
+1.42,
+1.82 
+],
+[
+ "2",
+-0.29,
+3.45,
+-1.45 
+],
+[
+ "3",
+-0.46,
+2.57,
+0.76 
+],
+[
+ "4",
+0.43,
+1.74,
+4.26 
+],
+[
+ "5",
+0.74,
+1.62,
+-3.34 
+],
+[
+ "6",
+0.52,
+1.96,
+-2.98 
+],
+[
+ "7",
+-1.32,
+2.12,
+0.03 
+],
+[
+ "8",
+1.06,
+1.26,
+0.11 
+],
+[
+ "9",
+-1.13,
+1.74,
+0.23 
+],
+[
+ "10",
+-0.15,
+1.56,
+0.17 
+],
+[
+ "11",
+1.79,
+0.7,
+0.64 
+],
+[
+ "12",
+-0.34,
+0.67,
+1.24 
+],
+[
+ "13",
+-1.08,
+0.98,
+0.6 
+],
+[
+ "14",
+2.05,
+-0.13,
+0.04 
+],
+[
+ "15",
+-0.52,
+1.76,
+-0.61 
+],
+[
+ "16",
+0.13,
+0.81,
+1.96 
+],
+[
+ "17",
+0.18,
+1.06,
+-0.86 
+],
+[
+ "18",
+-0.36,
+0.74,
+-0.4 
+],
+[
+ "19",
+-1.11,
+1.05,
+1.32 
+],
+[
+ "20",
+2.87,
+-0.67,
+0.27 
+],
+[
+ "21",
+2.52,
+-0.7,
+1.24 
+],
+[
+ "22",
+0.16,
+0.18,
+-0.33 
+],
+[
+ "23",
+-0.13,
+0.39,
+0.45 
+],
+[
+ "24",
+-0.67,
+0.92,
+-0.35 
+],
+[
+ "25",
+1.16,
+-0.2,
+0.56 
+],
+[
+ "26",
+1.79,
+0.16,
+-1.56 
+],
+[
+ "27",
+-1.07,
+0.29,
+0.9 
+],
+[
+ "28",
+-0.04,
+0.08,
+-0.13 
+],
+[
+ "29",
+-0.85,
+0.34,
+0.51 
+],
+[
+ "30",
+-0.27,
+0.02,
+0.77 
+],
+[
+ "31",
+-0.87,
+0.26,
+1.28 
+],
+[
+ "32",
+-0.29,
+0.49,
+-0.49 
+],
+[
+ "33",
+1.79,
+-0.25,
+-1.04 
+],
+[
+ "34",
+-0.57,
+0.32,
+-1.07 
+],
+[
+ "35",
+-0.53,
+0.13,
+0.16 
+],
+[
+ "36",
+-0.57,
+-0.4,
+0.08 
+],
+[
+ "37",
+-0.76,
+-0.17,
+0.24 
+],
+[
+ "38",
+-0.23,
+0.12,
+-1.38 
+],
+[
+ "39",
+0.24,
+-0.17,
+-1.41 
+],
+[
+ "40",
+-0.81,
+0.25,
+-0.11 
+],
+[
+ "41",
+0.15,
+-0.02,
+-0.61 
+],
+[
+ "42",
+-0.04,
+-0.49,
+-0.14 
+],
+[
+ "43",
+0.08,
+-0.53,
+-0.53 
+],
+[
+ "44",
+0.96,
+-0.65,
+-0.58 
+],
+[
+ "45",
+0.34,
+-0.47,
+-0.49 
+],
+[
+ "46",
+0.07,
+-0.56,
+0.36 
+],
+[
+ "47",
+-0.54,
+-0.77,
+0.16 
+],
+[
+ "48",
+-1.12,
+0.78,
+0.29 
+],
+[
+ "49",
+0.32,
+-0.73,
+0.15 
+],
+[
+ "50",
+-0.94,
+0.02,
+0.72 
+] 
+];
+data.addColumn('string','Observation');
+data.addColumn('number','Derived Variable (Factor) 1');
+data.addColumn('number','Derived Variable (Factor) 2');
+data.addColumn('number','Derived Variable (Factor) 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39113f68c0b1() {
+var data = gvisDataTableID39113f68c0b1();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39113f68c0b1')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39113f68c0b1);
+})();
+function displayChartTableID39113f68c0b1() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39113f68c0b1"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39113f68c0b1" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+</div></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Using the Factor Scores: Perceptual Maps</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- ScatterChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:27 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataScatterChartID39111992b90c () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ 5.06,
+1.42 
+],
+[
+ -0.29,
+3.45 
+],
+[
+ -0.46,
+2.57 
+],
+[
+ 0.43,
+1.74 
+],
+[
+ 0.74,
+1.62 
+],
+[
+ 0.52,
+1.96 
+],
+[
+ -1.32,
+2.12 
+],
+[
+ 1.06,
+1.26 
+],
+[
+ -1.13,
+1.74 
+],
+[
+ -0.15,
+1.56 
+],
+[
+ 1.79,
+0.7 
+],
+[
+ -0.34,
+0.67 
+],
+[
+ -1.08,
+0.98 
+],
+[
+ 2.05,
+-0.13 
+],
+[
+ -0.52,
+1.76 
+],
+[
+ 0.13,
+0.81 
+],
+[
+ 0.18,
+1.06 
+],
+[
+ -0.36,
+0.74 
+],
+[
+ -1.11,
+1.05 
+],
+[
+ 2.87,
+-0.67 
+],
+[
+ 2.52,
+-0.7 
+],
+[
+ 0.16,
+0.18 
+],
+[
+ -0.13,
+0.39 
+],
+[
+ -0.67,
+0.92 
+],
+[
+ 1.16,
+-0.2 
+],
+[
+ 1.79,
+0.16 
+],
+[
+ -1.07,
+0.29 
+],
+[
+ -0.04,
+0.08 
+],
+[
+ -0.85,
+0.34 
+],
+[
+ -0.27,
+0.02 
+],
+[
+ -0.87,
+0.26 
+],
+[
+ -0.29,
+0.49 
+],
+[
+ 1.79,
+-0.25 
+],
+[
+ -0.57,
+0.32 
+],
+[
+ -0.53,
+0.13 
+],
+[
+ -0.57,
+-0.4 
+],
+[
+ -0.76,
+-0.17 
+],
+[
+ -0.23,
+0.12 
+],
+[
+ 0.24,
+-0.17 
+],
+[
+ -0.81,
+0.25 
+],
+[
+ 0.15,
+-0.02 
+],
+[
+ -0.04,
+-0.49 
+],
+[
+ 0.08,
+-0.53 
+],
+[
+ 0.96,
+-0.65 
+],
+[
+ 0.34,
+-0.47 
+],
+[
+ 0.07,
+-0.56 
+],
+[
+ -0.54,
+-0.77 
+],
+[
+ -1.12,
+0.78 
+],
+[
+ 0.32,
+-0.73 
+],
+[
+ -0.94,
+0.02 
+],
+[
+ -0.45,
+-1 
+],
+[
+ 0.37,
+-0.63 
+],
+[
+ -0.35,
+-1.01 
+],
+[
+ -0.29,
+-0.6 
+],
+[
+ -0.7,
+-0.24 
+],
+[
+ -0.91,
+-0.61 
+],
+[
+ -0.29,
+-0.68 
+],
+[
+ 0.81,
+-1.07 
+],
+[
+ 0.51,
+-0.71 
+],
+[
+ 0.52,
+-0.91 
+],
+[
+ -0.37,
+-0.86 
+],
+[
+ -0.5,
+-0.7 
+],
+[
+ -0.14,
+-0.69 
+],
+[
+ -0.16,
+-0.55 
+],
+[
+ -0.34,
+-1.17 
+],
+[
+ -0.18,
+-1.07 
+],
+[
+ -0.51,
+-0.71 
+],
+[
+ 0.2,
+-0.88 
+],
+[
+ -0.51,
+-0.27 
+],
+[
+ -0.91,
+-0.53 
+],
+[
+ -0.14,
+-0.87 
+],
+[
+ -0.38,
+-1.06 
+],
+[
+ -0.42,
+-1.12 
+],
+[
+ -0.24,
+-0.88 
+],
+[
+ -0.32,
+-1.13 
+],
+[
+ -0.4,
+-0.79 
+],
+[
+ -0.36,
+-0.84 
+],
+[
+ -0.23,
+-1.37 
+],
+[
+ -0.28,
+-1.02 
+],
+[
+ -0.39,
+-1.04 
+] 
+];
+data.addColumn('number','V1');
+data.addColumn('number','V2');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartScatterChartID39111992b90c() {
+var data = gvisDataScatterChartID39111992b90c();
+var options = {};
+options["allowHtml"] = true;
+options["legend"] = "none";
+options["lineWidth"] =      0;
+options["pointSize"] =      8;
+options["hAxis.title"] = "Derived Variable (Factor) 2";
+options["title"] = "Data Visualization Using the top 2 Derived Attributes (Factors)";
+options["vAxis"] = {title:'Derived Variable (Factor) 1'};
+options["hAxis"] = {title:'Derived Variable (Factor) 2'};
+options["width"] =    900;
+options["height"] =    500;
+
+    var chart = new google.visualization.ScatterChart(
+    document.getElementById('ScatterChartID39111992b90c')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartScatterChartID39111992b90c);
+})();
+function displayChartScatterChartID39111992b90c() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartScatterChartID39111992b90c"></script>
+ 
+
+<!-- divChart -->
+
+<div id="ScatterChartID39111992b90c" 
+  style="width: 900; height: 500;">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Factor Analysis: Some (Technical) Concepts</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Correlation</li>
+<li>Variance explained (eigenvalues)</li>
+<li>Scree plot</li>
+<li>varimax rotation</li>
+<li>Factor Loadings (&quot;components&quot;)</li>
+<li>Factor scores</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Key Questions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>How many factors should we use? Why? Quantitative and Qualitative criteria</p></li>
+<li><p>How can we name and interpret the factors? </p></li>
+<li><p>What are some issues to consider? </p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Next Class: Cluster Analysis for Segmentation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="data:image/png;base64,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IIAAAggggICNBEjAbNQYhIIAAggggAACCCCAAALBLUACFtzty9YhgAACCCCAAAIIIICAjQRIwGzUGISCAAIIIIAAAggggAACwS1AAhbc7cvWIYAAAggggAACCCCAgI0ESMBs1BiEggACCCCAAAIIIIAAAsEtQAIW3O3L1iGAAAIIIIAAAggggICNBEjAbNQYhIIAAggggAACCCCAAALBLUACFtzty9YhgAACCCCAAAIIIICAjQRIwGzUGISCAAIIIIAAAggggAACwS1AAhbc7cvWIYAAAggggAACCCCAgI0ESMBs1BiEggACCCCAAAIIIIAAAsEtQAIW3O3L1iGAAAIIIIAAAggggICNBEjAbNQYhIIAAggggAACCCCAAALBLUACFtzty9YhgAACCCCAAAIIIICAjQRIwGzUGISCAAIIIIAAAggggAACwS1AAhbc7cvWIYAAAggUQyAnJ0dyc3OLsQbeigACCCCAgKsACZirB68QQAABBAJIoEOHDlK2bFmpWLGiVKhQQWrWrCnjx4+X8+fPm63Yvn27NGjQ4Jq26NChQ1KrVi1JS0u7pvfzJgQQQAABBC4nQAJ2ORWmIYAAAggEjMDMmTMlPT3dPDZu3Chbt26VwYMHm/ibNGkiqampV70t8+fPl4SEBDl+/PhVv5c3IIAAAggg4EmABMyTDvMQQAABBAJGICQkxJwBmz17trz99tty5MgR2bdvn/Tv399sQ3JysuijTZs2csMNN8jkyZPl008/lZtuuklatWolmzZtMstlZWXJsmXLZNWqVVKpUqWA2X4CRQABBBAIDIHSgREmUSKAAAIIIFA0gbp165ruiHv37pXy5cvLr7/+at6oZ7PmzZsnq1evFk2y4uPjRbswfvHFFybhmjFjhrRu3VrKlCkja9asKVplLIUAAggggMBVCpCAXSUYiyOAAAII2FtAz4RFR0fLiRMnTAKWP9qkpCRztkunxcbGSt++fUUTtsTERJk7d27+RXmOAAIIIICATwTogugTVlaKAAIIIGClgA6gERcXVyiE6tWrO6fp4B2OATrCw8NFRzykIIAAAggg4GsBEjBfC7N+BBBAAAG/Cqxdu9Z0I2zUqFGhekuVKlVoGhMQQAABBBDwpwBdEP2pTV0IIIAAAl4XyMjIkJMnT5qh53ft2iUjRowwj8jISK/XxQoRQAABBBAorgAJWHEFeT8CCCCAgKUCjz/+uOgjLCzMXNfVp08fmTBhgqUxUTkCCCCAAALuBEJy84q7mUxHAAEEEEAAAQQQQAABBBDwngDXgHnPkjUhgAACCCCAAAIIIIAAAh4FSMA88jATAQQQQAABBBBAAAEEEPCeAAmY9yxZEwIIIIAAAggggAACCCDgUYAEzCMPMxFAAAEEEEAAAQQQQAAB7wmQgHnPkjUhgAACCCCAAAIIIIAAAh4FSMA88jATAQQQQAABBBBAAAEEEPCeAAmY9yxZEwIIIIAAAggggAACCCDgUYAEzCMPMxFAAAEEEEAAAQQQQAAB7wmQgHnPkjUhgAACCCCAAAIIIIAAAh4FSMA88jATAQQQQAABBBBAAAEEEPCeAAmY9yxZEwIIIIAAAggggAACCCDgUYAEzCMPMxFAAAEEEEAAAQQQQAAB7wmQgHnPkjUhgAACCCCAAAIIIIAAAh4FSMA88jATAQQQQAABBBBAAAEEEPCeAAmY9yxZEwIIIIAAAggggAACCCDgUYAEzCMPMxFAAAEEEEAAAQQQQAAB7wmQgHnPkjUhgAACCCCAAAIIIIAAAh4F/g+qk/0CWX24HgAAAABJRU5ErkJggg==" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Why this class? Three goals'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Data Analytics Processes: Iterative Process Cycle with a Lifetime'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='What is Dimensionality Deduction and Factor Analysis?'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Factor Analysis: Key idea'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Key Questions'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Dimensionality Reduction and Factor Analysis: 6 (Easy) Steps'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Applying Factor Analysis: Evaluating MBA Applications'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Example Factors'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Step 1: Confirm the data are metric'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Step 2: Decide whether to scale or standardize the data: Summary Statistics'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Data Standardization: Example Code'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Standardized Data: Summary Statistics'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Step 3:  Check correlation matrix to see if Factor Analysis makes sense'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Step 4. Develop a scree plot and decide on the number of factors to be derived'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='How Many Factors? Eigenvalues and Variance Explained'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='How Many Factors? Scree Plot'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='How many factors?'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Step 5. Interpret the factors'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='For visualization, let&#39;s supress the small numbers...'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='What Factor Loads &quot;Look Good&quot;? Three Technical Quality Criteria'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Step 6. Save factor scores for subsequent analyses'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Using the Factor Scores: Perceptual Maps'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Factor Analysis: Some (Technical) Concepts'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Key Questions'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Next Class: Cluster Analysis for Segmentation'>
+         25
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

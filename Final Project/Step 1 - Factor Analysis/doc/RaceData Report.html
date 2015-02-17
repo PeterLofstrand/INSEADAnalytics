@@ -1,0 +1,3040 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Boats Segmentation: Factor Analysis</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p><link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"></p>
+
+<style type="text/css"> body {padding: 10px 30px 10px 30px;} table,th, td {text-align: center;} </style>
+
+<h1>Boats Segmentation: Factor Analysis</h1>
+
+<p><strong>Team names</strong></p>
+
+<h2>Business Decisions</h2>
+
+<p>your text&hellip;</p>
+
+<h2>The Data</h2>
+
+<p>your text&hellip;</p>
+
+<p>This is how the first 50 data looks:
+<br></p>
+
+<div class="row">
+<div class="col-md-6">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:23 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39112d896ef2 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+1506,
+7,
+91,
+68,
+77,
+155,
+309,
+308,
+241,
+444 
+],
+[
+ "2",
+660,
+0,
+11,
+14,
+17,
+68,
+326,
+325,
+227,
+-68 
+],
+[
+ "3",
+1203,
+1,
+15,
+8,
+8,
+50,
+268,
+267,
+215,
+91 
+],
+[
+ "4",
+1767,
+2,
+32,
+23,
+21,
+97,
+236,
+236,
+200,
+460 
+],
+[
+ "5",
+950,
+0,
+11,
+16,
+16,
+39,
+212,
+212,
+179,
+-247 
+],
+[
+ "6",
+535,
+0,
+13,
+12,
+18,
+62,
+247,
+247,
+169,
+-198 
+],
+[
+ "7",
+246,
+0,
+1,
+4,
+1,
+11,
+256,
+256,
+167,
+12 
+],
+[
+ "8",
+1024,
+1,
+20,
+17,
+39,
+77,
+213,
+212,
+167,
+124 
+],
+[
+ "9",
+275,
+0,
+3,
+4,
+2,
+18,
+231,
+230,
+163,
+35 
+],
+[
+ "10",
+1049,
+0,
+9,
+12,
+16,
+42,
+217,
+216,
+160,
+63 
+],
+[
+ "11",
+768,
+0,
+51,
+32,
+40,
+106,
+202,
+201,
+143,
+223 
+],
+[
+ "12",
+888,
+0,
+8,
+15,
+9,
+26,
+166,
+166,
+140,
+147 
+],
+[
+ "13",
+263,
+0,
+0,
+1,
+2,
+13,
+185,
+184,
+138,
+64 
+],
+[
+ "14",
+1487,
+2,
+33,
+38,
+19,
+70,
+148,
+148,
+128,
+99 
+],
+[
+ "15",
+281,
+0,
+6,
+8,
+13,
+37,
+257,
+256,
+126,
+-3 
+],
+[
+ "16",
+481,
+0,
+23,
+24,
+22,
+60,
+208,
+203,
+124,
+275 
+],
+[
+ "17",
+384,
+0,
+10,
+12,
+21,
+48,
+210,
+209,
+124,
+-1 
+],
+[
+ "18",
+329,
+0,
+6,
+6,
+8,
+27,
+181,
+180,
+121,
+0 
+],
+[
+ "19",
+241,
+0,
+1,
+2,
+4,
+32,
+202,
+201,
+119,
+142 
+],
+[
+ "20",
+1618,
+4,
+39,
+45,
+23,
+66,
+139,
+139,
+118,
+133 
+],
+[
+ "21",
+610,
+3,
+41,
+65,
+20,
+80,
+162,
+160,
+108,
+263 
+],
+[
+ "22",
+234,
+1,
+11,
+13,
+9,
+23,
+165,
+165,
+108,
+19 
+],
+[
+ "23",
+270,
+0,
+14,
+13,
+10,
+36,
+179,
+171,
+102,
+98 
+],
+[
+ "24",
+186,
+0,
+5,
+2,
+5,
+23,
+215,
+191,
+102,
+-3 
+],
+[
+ "25",
+424,
+2,
+20,
+26,
+25,
+51,
+165,
+160,
+102,
+154 
+],
+[
+ "26",
+480,
+1,
+31,
+32,
+30,
+59,
+191,
+186,
+98,
+-11 
+],
+[
+ "27",
+76,
+0,
+1,
+0,
+0,
+5,
+158,
+158,
+98,
+91 
+],
+[
+ "28",
+298,
+0,
+12,
+6,
+6,
+45,
+146,
+146,
+97,
+32 
+],
+[
+ "29",
+132,
+0,
+3,
+1,
+1,
+15,
+164,
+161,
+97,
+62 
+],
+[
+ "30",
+281,
+0,
+14,
+6,
+6,
+35,
+149,
+141,
+96,
+110 
+],
+[
+ "31",
+173,
+0,
+3,
+2,
+6,
+18,
+161,
+157,
+96,
+143 
+],
+[
+ "32",
+228,
+0,
+6,
+7,
+6,
+32,
+180,
+176,
+94,
+-5 
+],
+[
+ "33",
+420,
+3,
+25,
+24,
+24,
+54,
+177,
+170,
+90,
+9 
+],
+[
+ "34",
+97,
+0,
+3,
+0,
+0,
+7,
+165,
+162,
+90,
+-83 
+],
+[
+ "35",
+169,
+0,
+5,
+2,
+5,
+20,
+154,
+151,
+89,
+43 
+],
+[
+ "36",
+105,
+0,
+1,
+1,
+2,
+4,
+112,
+112,
+88,
+23 
+],
+[
+ "37",
+123,
+0,
+0,
+0,
+1,
+0,
+128,
+128,
+88,
+32 
+],
+[
+ "38",
+191,
+0,
+4,
+0,
+1,
+26,
+148,
+147,
+86,
+-104 
+],
+[
+ "39",
+209,
+0,
+5,
+5,
+14,
+28,
+139,
+130,
+83,
+-74 
+],
+[
+ "40",
+98,
+0,
+0,
+0,
+0,
+9,
+165,
+158,
+83,
+2 
+],
+[
+ "41",
+181,
+0,
+7,
+18,
+12,
+22,
+165,
+149,
+82,
+8 
+],
+[
+ "42",
+248,
+0,
+8,
+1,
+8,
+33,
+112,
+110,
+78,
+26 
+],
+[
+ "43",
+246,
+0,
+10,
+3,
+5,
+33,
+113,
+106,
+77,
+-11 
+],
+[
+ "44",
+360,
+0,
+22,
+20,
+19,
+42,
+122,
+116,
+77,
+38 
+],
+[
+ "45",
+253,
+0,
+14,
+11,
+11,
+31,
+128,
+122,
+73,
+15 
+],
+[
+ "46",
+206,
+0,
+10,
+14,
+9,
+26,
+123,
+119,
+71,
+88 
+],
+[
+ "47",
+56,
+0,
+0,
+0,
+1,
+3,
+94,
+94,
+70,
+29 
+],
+[
+ "48",
+59,
+0,
+0,
+1,
+1,
+5,
+214,
+208,
+69,
+42 
+],
+[
+ "49",
+199,
+1,
+12,
+6,
+13,
+24,
+117,
+116,
+68,
+67 
+],
+[
+ "50",
+71,
+0,
+0,
+0,
+2,
+4,
+162,
+148,
+67,
+81 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','point');
+data.addColumn('number','Champion');
+data.addColumn('number','victories');
+data.addColumn('number','poles');
+data.addColumn('number','Fastest.lap');
+data.addColumn('number','podium');
+data.addColumn('number','entries');
+data.addColumn('number','qualification');
+data.addColumn('number','classified');
+data.addColumn('number','CP.....');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39112d896ef2() {
+var data = gvisDataTableID39112d896ef2();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39112d896ef2')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39112d896ef2);
+})();
+function displayChartTableID39112d896ef2() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39112d896ef2"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39112d896ef2" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+<br> <br></p>
+
+<h2>Our Approach</h2>
+
+<h4>Factor Analysis in 6 steps</h4>
+
+<ol>
+<li><p>Confirm the data in metric </p></li>
+<li><p>Decide whether to scale or standardize the data</p></li>
+<li><p>Check the correlation matrix to see if Factor Analysis makes sense</p></li>
+<li><p>Develop a scree plot and decide on the number of factors to be derived</p></li>
+<li><p>Interpret the factors (consider factor rotations - technical but useful)</p></li>
+<li><p>Save factor scores for subsequent analyses</p></li>
+</ol>
+
+<p>Let&#39;s follow these steps.</p>
+
+<p>The data we use here have the following descriptive statistics: </p>
+
+<div class="row">
+<div class="col-md-6">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:24 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID391165cdaa6d () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "point",
+17,
+101.75,
+202.5,
+330.48,
+336.5,
+1767,
+383.72 
+],
+[
+ "Champion",
+0,
+0,
+0,
+0.39,
+0,
+7,
+1.07 
+],
+[
+ "victories",
+0,
+1,
+5,
+9.44,
+12,
+91,
+14.23 
+],
+[
+ "poles",
+0,
+0,
+4,
+9.16,
+13,
+68,
+13.42 
+],
+[
+ "Fastest lap",
+0,
+1,
+5,
+9.07,
+13.25,
+77,
+11.89 
+],
+[
+ "podium",
+0,
+6.75,
+22.5,
+27.46,
+37.5,
+155,
+27.99 
+],
+[
+ "entries",
+58,
+109,
+143,
+150.28,
+180.25,
+326,
+56.74 
+],
+[
+ "qualification",
+58,
+104,
+137.5,
+146.41,
+177,
+325,
+57.13 
+],
+[
+ "classified",
+50,
+61.75,
+82.5,
+94.06,
+110.5,
+241,
+44.48 
+],
+[
+ "CP     ",
+-247,
+-5,
+33.5,
+45.21,
+82.75,
+460,
+104.56 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','min');
+data.addColumn('number','X25.percent');
+data.addColumn('number','median');
+data.addColumn('number','mean');
+data.addColumn('number','X75.percent');
+data.addColumn('number','max');
+data.addColumn('number','std');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID391165cdaa6d() {
+var data = gvisDataTableID391165cdaa6d();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    297;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID391165cdaa6d')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID391165cdaa6d);
+})();
+function displayChartTableID391165cdaa6d() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID391165cdaa6d"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID391165cdaa6d" 
+  style="width: 1220; height: 297;">
+</div>
+
+<p></div>
+</div></p>
+
+<h4>Step 2: Decide whether to scale or standardize the data</h4>
+
+<p>your text&hellip;</p>
+
+<pre><code class="r">ProjectDatafactor_scaled=apply(ProjectDataFactor,2, function(r) {if (sd(r)!=0) res=(r-mean(r))/sd(r) else res=0*r; res})
+</code></pre>
+
+<p>Notice now the summary statistics of the scaled dataset:</p>
+
+<p><br></p>
+
+<div class="row">
+<div class="col-md-6">
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:24 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39117aae07b9 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "point",
+-0.82,
+-0.6,
+-0.33,
+0,
+0.02,
+3.74,
+1 
+],
+[
+ "Champion",
+-0.36,
+-0.36,
+-0.36,
+0,
+-0.36,
+6.16,
+1 
+],
+[
+ "victories",
+-0.66,
+-0.59,
+-0.31,
+0,
+0.18,
+5.73,
+1 
+],
+[
+ "poles",
+-0.68,
+-0.68,
+-0.38,
+0,
+0.29,
+4.39,
+1 
+],
+[
+ "Fastest lap",
+-0.76,
+-0.68,
+-0.34,
+0,
+0.35,
+5.71,
+1 
+],
+[
+ "podium",
+-0.98,
+-0.74,
+-0.18,
+0,
+0.36,
+4.56,
+1 
+],
+[
+ "entries",
+-1.63,
+-0.73,
+-0.13,
+0,
+0.53,
+3.1,
+1 
+],
+[
+ "qualification",
+-1.55,
+-0.74,
+-0.16,
+0,
+0.54,
+3.13,
+1 
+],
+[
+ "classified",
+-0.99,
+-0.73,
+-0.26,
+0,
+0.37,
+3.3,
+1 
+],
+[
+ "CP     ",
+-2.79,
+-0.48,
+-0.11,
+0,
+0.36,
+3.97,
+1 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','min');
+data.addColumn('number','X25.percent');
+data.addColumn('number','median');
+data.addColumn('number','mean');
+data.addColumn('number','X75.percent');
+data.addColumn('number','max');
+data.addColumn('number','std');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39117aae07b9() {
+var data = gvisDataTableID39117aae07b9();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    297;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39117aae07b9')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39117aae07b9);
+})();
+function displayChartTableID39117aae07b9() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39117aae07b9"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39117aae07b9" 
+  style="width: 1220; height: 297;">
+</div>
+
+<p></div>
+</div></p>
+
+<p><br>
+As expected all variables have mean 0 and standard deviation 1. </p>
+
+<h4>Step 3:  Check correlation matrix to see if Factor Analysis makes sense</h4>
+
+<p>your text&hellip;</p>
+
+<p>This is the correlation matrix of the 10 original variable we use for factor analysis (Note: this would be the same for the standardized ones if the standardization is done as above; there is a mathematical reason for this that we will not explore - you could confirm it yourself):</p>
+
+<table border="1" class="data table table-bordered table-condensed">
+  <thead class="thead">
+    <tr>
+      <th></th>
+      <th>point</th>
+      <th>Champion</th>
+      <th>victories</th>
+      <th>poles</th>
+      <th>Fastest lap</th>
+      <th>podium</th>
+      <th>entries</th>
+      <th>qualification</th>
+      <th>classified</th>
+      <th>CP     </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="right">point</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(92,255,92)">0.64</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(74,255,74)">0.71</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(115,255,115)">0.55</td>
+      <td align="right" style="background-color: rgb(64,255,64)">0.75</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+    </tr>
+    <tr>
+      <td align="right">Champion</td>
+      <td align="right" style="background-color: rgb(92,255,92)">0.64</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.32</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(112,255,112)">0.56</td>
+    </tr>
+    <tr>
+      <td align="right">victories</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(99,255,99)">0.61</td>
+    </tr>
+    <tr>
+      <td align="right">poles</td>
+      <td align="right" style="background-color: rgb(74,255,74)">0.71</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(40,255,40)">0.84</td>
+      <td align="right" style="background-color: rgb(38,255,38)">0.85</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.42</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+    </tr>
+    <tr>
+      <td align="right">Fastest lap</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(69,255,69)">0.73</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(40,255,40)">0.84</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(102,255,102)">0.60</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+    </tr>
+    <tr>
+      <td align="right">podium</td>
+      <td align="right" style="background-color: rgb(48,255,48)">0.81</td>
+      <td align="right" style="background-color: rgb(79,255,79)">0.69</td>
+      <td align="right" style="background-color: rgb(20,255,20)">0.92</td>
+      <td align="right" style="background-color: rgb(38,255,38)">0.85</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(71,255,71)">0.72</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+    </tr>
+    <tr>
+      <td align="right">entries</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(28,255,28)">0.89</td>
+      <td align="right" style="background-color: rgb(199,255,199)">0.22</td>
+    </tr>
+    <tr>
+      <td align="right">qualification</td>
+      <td align="right" style="background-color: rgb(115,255,115)">0.55</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.32</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.44</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.42</td>
+      <td align="right" style="background-color: rgb(120,255,120)">0.53</td>
+      <td align="right" style="background-color: rgb(94,255,94)">0.63</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(197,255,197)">0.23</td>
+    </tr>
+    <tr>
+      <td align="right">classified</td>
+      <td align="right" style="background-color: rgb(64,255,64)">0.75</td>
+      <td align="right" style="background-color: rgb(151,255,151)">0.41</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(102,255,102)">0.60</td>
+      <td align="right" style="background-color: rgb(71,255,71)">0.72</td>
+      <td align="right" style="background-color: rgb(28,255,28)">0.89</td>
+      <td align="right" style="background-color: rgb(23,255,23)">0.91</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+    </tr>
+    <tr>
+      <td align="right">CP     </td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(112,255,112)">0.56</td>
+      <td align="right" style="background-color: rgb(99,255,99)">0.61</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(130,255,130)">0.49</td>
+      <td align="right" style="background-color: rgb(117,255,117)">0.54</td>
+      <td align="right" style="background-color: rgb(199,255,199)">0.22</td>
+      <td align="right" style="background-color: rgb(197,255,197)">0.23</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.31</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>your text&hellip;</p>
+
+<h4>Step 4. Develop a scree plot and decide on the number of factors to be derived</h4>
+
+<p>your text&hellip;</p>
+
+<p><br></p>
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:24 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID3911fbc3611 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "Component No:1",
+6.698557868,
+66.98557868,
+66.98557868 
+],
+[
+ "Component No:2",
+1.738291124,
+17.38291124,
+84.36848992 
+],
+[
+ "Component No:3",
+0.5895894826,
+5.895894826,
+90.26438474 
+],
+[
+ "Component No:4",
+0.3814510227,
+3.814510227,
+94.07889497 
+],
+[
+ "Component No:5",
+0.3034792235,
+3.034792235,
+97.1136872 
+],
+[
+ "Component No:6",
+0.1382182999,
+1.382182999,
+98.4958702 
+],
+[
+ "Component No:7",
+0.06104601218,
+0.6104601218,
+99.10633033 
+],
+[
+ "Component No:8",
+0.05549389815,
+0.5549389815,
+99.66126931 
+],
+[
+ "Component No:9",
+0.03161911141,
+0.3161911141,
+99.97746042 
+],
+[
+ "Component No:10",
+0.002253957921,
+0.02253957921,
+100 
+] 
+];
+data.addColumn('string','Components');
+data.addColumn('number','Eigenvalue');
+data.addColumn('number','Percentage_of_explained_variance');
+data.addColumn('number','Cumulative_percentage_of_explained_variance');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID3911fbc3611() {
+var data = gvisDataTableID3911fbc3611();
+var options = {};
+options["allowHtml"] = true;
+options["width"] =   1200;
+options["height"] =    297;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+  var dataFormat1 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat1.format(data, 1);
+  var dataFormat2 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat2.format(data, 2);
+  var dataFormat3 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat3.format(data, 3);
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID3911fbc3611')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID3911fbc3611);
+})();
+function displayChartTableID3911fbc3611() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID3911fbc3611"></script>
+ 
+
+<!-- divChart -->
+
+<div id="TableID3911fbc3611" 
+  style="width: 1200; height: 297;">
+</div>
+
+<p><br> <br></p>
+
+<p>your text&hellip;</p>
+
+<!-- LineChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:24 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataLineChartID391138b69cac () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+6.698557868,
+1 
+],
+[
+ "2",
+1.738291124,
+1 
+],
+[
+ "3",
+0.5895894826,
+1 
+],
+[
+ "4",
+0.3814510227,
+1 
+],
+[
+ "5",
+0.3034792235,
+1 
+],
+[
+ "6",
+0.1382182999,
+1 
+],
+[
+ "7",
+0.06104601218,
+1 
+],
+[
+ "8",
+0.05549389815,
+1 
+],
+[
+ "9",
+0.03161911141,
+1 
+],
+[
+ "10",
+0.002253957921,
+1 
+] 
+];
+data.addColumn('string','components');
+data.addColumn('number','eigenvalues');
+data.addColumn('number','abline');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartLineChartID391138b69cac() {
+var data = gvisDataLineChartID391138b69cac();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Scree plot";
+options["legend"] = "right";
+options["width"] =    900;
+options["height"] =    600;
+options["hAxis"] = {title:'Number of Components', titleTextStyle:{color:'black'}};
+options["vAxes"] = [{title:'Eigenvalues'}];
+options["series"] = [{color:'green',pointSize:3, targetAxisIndex: 0}];
+
+    var chart = new google.visualization.LineChart(
+    document.getElementById('LineChartID391138b69cac')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartLineChartID391138b69cac);
+})();
+function displayChartLineChartID391138b69cac() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID391138b69cac"></script>
+ 
+
+<!-- divChart -->
+
+<div id="LineChartID391138b69cac" 
+  style="width: 900; height: 600;">
+</div>
+
+<p>your text&hellip;</p>
+
+<p>your text&hellip;</p>
+
+<h4>5. Interpret the factors</h4>
+
+<p>For our data, the 3 selected factors look as follows after the varimax rotation: </p>
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39116ddcb4f6 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "victories",
+0.91,
+0.24,
+0.24 
+],
+[
+ "poles",
+0.91,
+0.21,
+0.18 
+],
+[
+ "Fastest lap",
+0.87,
+0.35,
+0.1 
+],
+[
+ "Champion",
+0.83,
+0.1,
+0.28 
+],
+[
+ "podium",
+0.81,
+0.49,
+0.18 
+],
+[
+ "point",
+0.65,
+0.49,
+0.26 
+],
+[
+ "CP     ",
+0.39,
+0.1,
+0.91 
+],
+[
+ "classified",
+0.33,
+0.9,
+0.12 
+],
+[
+ "entries",
+0.21,
+0.95,
+0.05 
+],
+[
+ "qualification",
+0.21,
+0.96,
+0.05 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39116ddcb4f6() {
+var data = gvisDataTableID39116ddcb4f6();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    297;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39116ddcb4f6')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39116ddcb4f6);
+})();
+function displayChartTableID39116ddcb4f6() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39116ddcb4f6"></script>
+ 
+
+<!-- divChart -->
+
+<div id="TableID39116ddcb4f6" 
+  style="width: 1220; height: 297;">
+</div>
+
+<p><br> <br></p>
+
+<p>To better visualize and interpret the factors we often &ldquo;supress&rdquo; loadings with small values, e.g. with absolute values smaller than 0.5. In this case our factors look as follows after suppressing the small numbers:</p>
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID391121dd8dca () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "victories",
+0.91,
+null,
+null 
+],
+[
+ "poles",
+0.91,
+null,
+null 
+],
+[
+ "Fastest lap",
+0.87,
+null,
+null 
+],
+[
+ "Champion",
+0.83,
+null,
+null 
+],
+[
+ "podium",
+0.81,
+null,
+null 
+],
+[
+ "point",
+0.65,
+null,
+null 
+],
+[
+ "CP     ",
+null,
+null,
+0.91 
+],
+[
+ "classified",
+null,
+0.9,
+null 
+],
+[
+ "entries",
+null,
+0.95,
+null 
+],
+[
+ "qualification",
+null,
+0.96,
+null 
+] 
+];
+data.addColumn('string','Variables');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID391121dd8dca() {
+var data = gvisDataTableID391121dd8dca();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    297;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID391121dd8dca')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID391121dd8dca);
+})();
+function displayChartTableID391121dd8dca() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID391121dd8dca"></script>
+ 
+
+<!-- divChart -->
+
+<div id="TableID391121dd8dca" 
+  style="width: 1220; height: 297;">
+</div>
+
+<p><br> <br></p>
+
+<p>How would you interpret the selected factors?</p>
+
+<p>YOUR TEXT: INTERPRETATIONS AND ARGUMENTS FOR YOUR CHOICES..</p>
+
+<h4>Step 6. Save factor scores for subsequent analyses</h4>
+
+<p>For our data, using the rotated factors we selected, we can create a new dataset where our observations are as follows (for the first 50 observations):</p>
+
+<div class="row">
+<div class="col-md-6">
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID39113f029ee4 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+5.06,
+1.42,
+1.82 
+],
+[
+ "2",
+-0.29,
+3.45,
+-1.45 
+],
+[
+ "3",
+-0.46,
+2.57,
+0.76 
+],
+[
+ "4",
+0.43,
+1.74,
+4.26 
+],
+[
+ "5",
+0.74,
+1.62,
+-3.34 
+],
+[
+ "6",
+0.52,
+1.96,
+-2.98 
+],
+[
+ "7",
+-1.32,
+2.12,
+0.03 
+],
+[
+ "8",
+1.06,
+1.26,
+0.11 
+],
+[
+ "9",
+-1.13,
+1.74,
+0.23 
+],
+[
+ "10",
+-0.15,
+1.56,
+0.17 
+],
+[
+ "11",
+1.79,
+0.7,
+0.64 
+],
+[
+ "12",
+-0.34,
+0.67,
+1.24 
+],
+[
+ "13",
+-1.08,
+0.98,
+0.6 
+],
+[
+ "14",
+2.05,
+-0.13,
+0.04 
+],
+[
+ "15",
+-0.52,
+1.76,
+-0.61 
+],
+[
+ "16",
+0.13,
+0.81,
+1.96 
+],
+[
+ "17",
+0.18,
+1.06,
+-0.86 
+],
+[
+ "18",
+-0.36,
+0.74,
+-0.4 
+],
+[
+ "19",
+-1.11,
+1.05,
+1.32 
+],
+[
+ "20",
+2.87,
+-0.67,
+0.27 
+],
+[
+ "21",
+2.52,
+-0.7,
+1.24 
+],
+[
+ "22",
+0.16,
+0.18,
+-0.33 
+],
+[
+ "23",
+-0.13,
+0.39,
+0.45 
+],
+[
+ "24",
+-0.67,
+0.92,
+-0.35 
+],
+[
+ "25",
+1.16,
+-0.2,
+0.56 
+],
+[
+ "26",
+1.79,
+0.16,
+-1.56 
+],
+[
+ "27",
+-1.07,
+0.29,
+0.9 
+],
+[
+ "28",
+-0.04,
+0.08,
+-0.13 
+],
+[
+ "29",
+-0.85,
+0.34,
+0.51 
+],
+[
+ "30",
+-0.27,
+0.02,
+0.77 
+],
+[
+ "31",
+-0.87,
+0.26,
+1.28 
+],
+[
+ "32",
+-0.29,
+0.49,
+-0.49 
+],
+[
+ "33",
+1.79,
+-0.25,
+-1.04 
+],
+[
+ "34",
+-0.57,
+0.32,
+-1.07 
+],
+[
+ "35",
+-0.53,
+0.13,
+0.16 
+],
+[
+ "36",
+-0.57,
+-0.4,
+0.08 
+],
+[
+ "37",
+-0.76,
+-0.17,
+0.24 
+],
+[
+ "38",
+-0.23,
+0.12,
+-1.38 
+],
+[
+ "39",
+0.24,
+-0.17,
+-1.41 
+],
+[
+ "40",
+-0.81,
+0.25,
+-0.11 
+],
+[
+ "41",
+0.15,
+-0.02,
+-0.61 
+],
+[
+ "42",
+-0.04,
+-0.49,
+-0.14 
+],
+[
+ "43",
+0.08,
+-0.53,
+-0.53 
+],
+[
+ "44",
+0.96,
+-0.65,
+-0.58 
+],
+[
+ "45",
+0.34,
+-0.47,
+-0.49 
+],
+[
+ "46",
+0.07,
+-0.56,
+0.36 
+],
+[
+ "47",
+-0.54,
+-0.77,
+0.16 
+],
+[
+ "48",
+-1.12,
+0.78,
+0.29 
+],
+[
+ "49",
+0.32,
+-0.73,
+0.15 
+],
+[
+ "50",
+-0.94,
+0.02,
+0.72 
+] 
+];
+data.addColumn('string','Observation');
+data.addColumn('number','Derived Variable (Factor) 1');
+data.addColumn('number','Derived Variable (Factor) 2');
+data.addColumn('number','Derived Variable (Factor) 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID39113f029ee4() {
+var data = gvisDataTableID39113f029ee4();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID39113f029ee4')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID39113f029ee4);
+})();
+function displayChartTableID39113f029ee4() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID39113f029ee4"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID39113f029ee4" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p></div>
+</div>
+<br> <br></p>
+
+<p>Can you describe the observations using the new derived variables? How does each person perform for each of the selected factors?</p>
+
+<p>We now can replace our original data with the new ones and continue our analysis. For example, we can now visualize our original data using only the newly derived attributes. Here is the plot when we use only the top 2 factors:</p>
+
+<!-- ScatterChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Tue Feb 17 21:40:25 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataScatterChartID391145905e6 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ 5.06,
+1.42 
+],
+[
+ -0.29,
+3.45 
+],
+[
+ -0.46,
+2.57 
+],
+[
+ 0.43,
+1.74 
+],
+[
+ 0.74,
+1.62 
+],
+[
+ 0.52,
+1.96 
+],
+[
+ -1.32,
+2.12 
+],
+[
+ 1.06,
+1.26 
+],
+[
+ -1.13,
+1.74 
+],
+[
+ -0.15,
+1.56 
+],
+[
+ 1.79,
+0.7 
+],
+[
+ -0.34,
+0.67 
+],
+[
+ -1.08,
+0.98 
+],
+[
+ 2.05,
+-0.13 
+],
+[
+ -0.52,
+1.76 
+],
+[
+ 0.13,
+0.81 
+],
+[
+ 0.18,
+1.06 
+],
+[
+ -0.36,
+0.74 
+],
+[
+ -1.11,
+1.05 
+],
+[
+ 2.87,
+-0.67 
+],
+[
+ 2.52,
+-0.7 
+],
+[
+ 0.16,
+0.18 
+],
+[
+ -0.13,
+0.39 
+],
+[
+ -0.67,
+0.92 
+],
+[
+ 1.16,
+-0.2 
+],
+[
+ 1.79,
+0.16 
+],
+[
+ -1.07,
+0.29 
+],
+[
+ -0.04,
+0.08 
+],
+[
+ -0.85,
+0.34 
+],
+[
+ -0.27,
+0.02 
+],
+[
+ -0.87,
+0.26 
+],
+[
+ -0.29,
+0.49 
+],
+[
+ 1.79,
+-0.25 
+],
+[
+ -0.57,
+0.32 
+],
+[
+ -0.53,
+0.13 
+],
+[
+ -0.57,
+-0.4 
+],
+[
+ -0.76,
+-0.17 
+],
+[
+ -0.23,
+0.12 
+],
+[
+ 0.24,
+-0.17 
+],
+[
+ -0.81,
+0.25 
+],
+[
+ 0.15,
+-0.02 
+],
+[
+ -0.04,
+-0.49 
+],
+[
+ 0.08,
+-0.53 
+],
+[
+ 0.96,
+-0.65 
+],
+[
+ 0.34,
+-0.47 
+],
+[
+ 0.07,
+-0.56 
+],
+[
+ -0.54,
+-0.77 
+],
+[
+ -1.12,
+0.78 
+],
+[
+ 0.32,
+-0.73 
+],
+[
+ -0.94,
+0.02 
+],
+[
+ -0.45,
+-1 
+],
+[
+ 0.37,
+-0.63 
+],
+[
+ -0.35,
+-1.01 
+],
+[
+ -0.29,
+-0.6 
+],
+[
+ -0.7,
+-0.24 
+],
+[
+ -0.91,
+-0.61 
+],
+[
+ -0.29,
+-0.68 
+],
+[
+ 0.81,
+-1.07 
+],
+[
+ 0.51,
+-0.71 
+],
+[
+ 0.52,
+-0.91 
+],
+[
+ -0.37,
+-0.86 
+],
+[
+ -0.5,
+-0.7 
+],
+[
+ -0.14,
+-0.69 
+],
+[
+ -0.16,
+-0.55 
+],
+[
+ -0.34,
+-1.17 
+],
+[
+ -0.18,
+-1.07 
+],
+[
+ -0.51,
+-0.71 
+],
+[
+ 0.2,
+-0.88 
+],
+[
+ -0.51,
+-0.27 
+],
+[
+ -0.91,
+-0.53 
+],
+[
+ -0.14,
+-0.87 
+],
+[
+ -0.38,
+-1.06 
+],
+[
+ -0.42,
+-1.12 
+],
+[
+ -0.24,
+-0.88 
+],
+[
+ -0.32,
+-1.13 
+],
+[
+ -0.4,
+-0.79 
+],
+[
+ -0.36,
+-0.84 
+],
+[
+ -0.23,
+-1.37 
+],
+[
+ -0.28,
+-1.02 
+],
+[
+ -0.39,
+-1.04 
+] 
+];
+data.addColumn('number','V1');
+data.addColumn('number','V2');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartScatterChartID391145905e6() {
+var data = gvisDataScatterChartID391145905e6();
+var options = {};
+options["allowHtml"] = true;
+options["legend"] = "none";
+options["lineWidth"] =      0;
+options["pointSize"] =      8;
+options["hAxis.title"] = "Derived Variable (Factor) 2";
+options["title"] = "Data Visualization Using the top 2 Derived Attributes (Factors)";
+options["vAxis"] = {title:'Derived Variable (Factor) 1'};
+options["hAxis"] = {title:'Derived Variable (Factor) 2'};
+options["width"] =    900;
+options["height"] =    800;
+
+    var chart = new google.visualization.ScatterChart(
+    document.getElementById('ScatterChartID391145905e6')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartScatterChartID391145905e6);
+})();
+function displayChartScatterChartID391145905e6() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartScatterChartID391145905e6"></script>
+ 
+
+<!-- divChart -->
+
+<div id="ScatterChartID391145905e6" 
+  style="width: 900; height: 800;">
+</div>
+
+<h2>Intepretation, Decisions and Conclusion</h2>
+
+<p>YOUR TEXT HERE&hellip;.</p>
+
+</body>
+
+</html>
