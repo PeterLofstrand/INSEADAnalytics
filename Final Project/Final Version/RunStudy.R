@@ -101,7 +101,7 @@ hclust_method = "ward"
 kmeans_method = "Lloyd"
 
 # Please enter the minimum number below which you would like not to print - this makes the readability of the tables easier. Default values are either 10e6 (to print everything) or 0.5. Try both to see the difference.
-MIN_VALUE=0.5
+MIN_VALUE=0.1
 
 
 # Program 3 Data Starts Here
@@ -124,11 +124,11 @@ actual_0_predict_0 = 0
 
 # Please ENTER the probability threshold above which an observations  
 # is predicted as class 1:
-Probability_Threshold = 50 # between 1 and 99%
+Probability_Threshold = 60 # between 1 and 99%
 
 # Please ENTER the percentage of data used for estimation
 estimation_data_percent = 35
-validation_data_percent = 30
+validation_data_percent = 35
 
 # Please enter 0 if you want to "randomly" split the data in estimation and validation/test
 random_sampling = 0
@@ -138,7 +138,7 @@ random_sampling = 0
 CART_cp = 0.01
 
 # Please enter the minimum size of a segment for the analysis to be done only for that segment
-min_segment = 100
+min_segment = 20
 
 # Please enter the maximum number of observations to show in the report and slides 
 # (DEFAULT is 50. If the number is large the report and slides may not be generated - very slow or will crash!!)
