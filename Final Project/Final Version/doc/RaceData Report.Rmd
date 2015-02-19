@@ -156,7 +156,7 @@ ordihull(cmd, factor(kclus$cluster), lty = "dotted")
 After running the clustering and segmentation analysis we came to the conclusion, that we can easily identify 4 segments, in which the drivers can fall. Those segments are visible from the below indicators, which show the potential for each of the segments to contain winning drivers:
 
 
-<img src="pic1.png">
+<img src="../data/pic1.png">
 The chosen segments are described as per below:
 
 **Segment 1- “The Winners”**
